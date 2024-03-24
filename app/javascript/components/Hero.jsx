@@ -1,34 +1,35 @@
 import React from "react";
-
-import { Button } from 'antd';
-
-const Features = ({ features }) => (
-    <ul className="list-disc">
-        {features.map((feature, index) => (
-            <li
-                className="neeto-ui-border-gray-100 border-b py-3 last:border-0"
-                key={index}
-            >
-                {feature}
-            </li>
-        ))}
-    </ul>
-);
+import { Button, Typography } from "antd";
+import { Link } from "react-router-dom";
+// Assuming you're using React Router
+const { Title, Paragraph } = Typography;
 
 const Hero = () => (
-    <div className="flex h-screen flex-row items-center justify-center">
-        <div className="m-auto flex max-w-3xl flex-col items-center justify-center p-8">
-            <h1 className="mb-3 text-4xl font-bold">Wheel</h1>
-            <p className="neeto-ui-text-gray-800 mx-auto mb-6 text-center text-lg">
-                Don&apos;t reinvent the wheel. Use sane defaults to bootstrap your
-                react-rails project!
-            </p>
-            <Features features={[]} />
-            <div className="mt-6 flex items-center justify-center">
-                <Button label="Login" to="/login" type="primary" />
-            </div>
-        </div>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "100vh",
+    }}
+  >
+    <div style={{ maxWidth: "800px", textAlign: "center", padding: "0 20px" }}>
+      <Title level={1} style={{ color: "#000", marginBottom: "20px" }}>
+        Rails, React Template
+      </Title>
+      <Paragraph style={{ color: "#000", marginBottom: "40px" }}>
+        Don't reinvent the wheel. Use sane defaults to bootstrap your
+        react-rails project!
+      </Paragraph>
+      <div style={{ marginTop: "40px" }}>
+        <Link to="/login">
+          <Button size="large" type="primary">
+            Login
+          </Button>
+        </Link>
+      </div>
     </div>
+  </div>
 );
 
 export default Hero;
