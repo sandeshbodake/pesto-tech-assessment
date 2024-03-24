@@ -2,6 +2,7 @@
   "name": "pesto-tech-assessment",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.8.3",
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.3",
     "antd": "^5.15.3",
@@ -67,9 +68,9 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^7.0.4",
     "lint-staged": "^13.2.2",
-    "prettier": "^2.8.8",
-    "husky": "^7.0.4"
+    "prettier": "^2.8.8"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",

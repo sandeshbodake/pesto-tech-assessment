@@ -1,102 +1,119 @@
 import React from "react";
-import { Form, Formik } from "formik";
-import { Button, Input } from "antd";
-import PropTypes from "prop-types";
-import authenticationApi from "apis/authentication";
-import { LOGIN_PATH } from "components/routeConstants";
-import {
-    SIGNUP_FORM_INITIAL_VALUES,
-    SIGNUP_FORM_VALIDATION_SCHEMA,
-} from "./constants";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input } from "antd";
+import { LOGIN_PATH } from "../routeConstants";
 
-const Signup = ({ history }) => {
-    const handleSubmit = async (formData) => {
-        try {
-            await authenticationApi.signup(formData);
-            history.push(LOGIN_PATH);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+const Signup = () => {
+  const onFinish = values => {
+    // eslint-disable-next-line no-console
+    console.log("Received values of form: ", values);
+  };
 
-    return (
-        <div className="antialiased bg-gray-100 h-screen flex items-center justify-center overflow-y-auto overflow-x-hidden p-6">
-            <div className="max-w-md w-full">
-                <h2 className="text-gray-800 mb-5 text-center text-3xl font-extrabold">
-                    Signup
-                </h2>
-                <Formik
-                    initialValues={SIGNUP_FORM_INITIAL_VALUES}
-                    validationSchema={SIGNUP_FORM_VALIDATION_SCHEMA}
-                    onSubmit={handleSubmit}
-                >
-                    {({ isSubmitting }) => (
-                        <Form className="rounded-md bg-white shadow-sm w-full space-y-6 border p-8">
-                            <Input
-                                addonBefore="Email"
-                                name="email"
-                                placeholder="oliver@example.com"
-                                type="email"
-                                required
-                            />
-                            <Input
-                                addonBefore="First name"
-                                name="firstName"
-                                placeholder="Oliver"
-                                type="text"
-                                required
-                            />
-                            <Input
-                                addonBefore="Last name"
-                                name="lastName"
-                                placeholder="Smith"
-                                type="text"
-                                required
-                            />
-                            <Input.Password
-                                addonBefore="Password"
-                                name="password"
-                                placeholder="******"
-                                required
-                            />
-                            <Input.Password
-                                addonBefore="Confirm password"
-                                name="passwordConfirmation"
-                                placeholder="******"
-                                required
-                            />
-                            <Button
-                                className="h-8"
-                                disabled={isSubmitting}
-                                type="primary"
-                                htmlType="submit"
-                                loading={isSubmitting}
-                                block
-                            >
-                                Signup
-                            </Button>
-                        </Form>
-                    )}
-                </Formik>
-                <div className="mt-4 flex flex-row items-center justify-start space-x-1">
-                    <p className="text-gray-600 font-normal">
-                        Already have an account?
-                    </p>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => history.push(LOGIN_PATH)}
-                    >
-                        Login
-                    </Button>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-Signup.propTypes = {
-    history: PropTypes.object,
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <Form
+        className="login-form"
+        name="signup"
+        style={{ width: "300px" }}
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+      >
+        <h2 style={{ textAlign: "center", marginBottom: "24px" }}>Signup</h2>{" "}
+        {/* Add Login label here */}
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              type: "email",
+              required: true,
+              message: "Please input your Email!",
+            },
+          ]}
+        >
+          <Input
+            placeholder="Email"
+            prefix={<UserOutlined className="site-form-item-icon" />}
+          />
+        </Form.Item>
+        <Form.Item
+          name="firstName"
+          rules={[
+            {
+              required: true,
+              message: "Please input your First Name!",
+            },
+          ]}
+        >
+          <Input
+            placeholder="First Name"
+            prefix={<UserOutlined className="site-form-item-icon" />}
+          />
+        </Form.Item>
+        <Form.Item
+          name="firstName"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Last Name!",
+            },
+          ]}
+        >
+          <Input
+            placeholder="Last Name"
+            prefix={<UserOutlined className="site-form-item-icon" />}
+          />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Password!",
+            },
+          ]}
+        >
+          <Input.Password
+            placeholder="Password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
+          />
+        </Form.Item>
+        <Form.Item
+          name="confirmPassword"
+          rules={[
+            {
+              required: true,
+              message: "Please input your Password!",
+            },
+          ]}
+        >
+          <Input.Password
+            placeholder="Confirm Password"
+            prefix={<LockOutlined className="site-form-item-icon" />}
+          />
+        </Form.Item>
+        <Form.Item style={{ marginBottom: 0 }}>
+          <Button
+            className="login-form-button"
+            htmlType="submit"
+            style={{ width: "100%" }}
+            type="primary"
+          >
+            Sign Up
+          </Button>
+          Or <a href={LOGIN_PATH}>Sign in</a>
+        </Form.Item>
+      </Form>
+    </div>
+  );
 };
 
 export default Signup;
