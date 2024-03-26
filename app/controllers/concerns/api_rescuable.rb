@@ -8,7 +8,6 @@ module ApiRescuable
     rescue_from ActiveRecord::RecordInvalid, with: :handle_validation_error
     rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
     rescue_from ActionController::ParameterMissing, with: :handle_api_error
-    rescue_from Pundit::NotAuthorizedError, with: :handle_unauthorized_error
   end
 
   private

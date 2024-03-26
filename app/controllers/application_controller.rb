@@ -2,5 +2,4 @@
 
 class ApplicationController < ActionController::Base
   include Expirable
-  include Pundit::Authorization
 end

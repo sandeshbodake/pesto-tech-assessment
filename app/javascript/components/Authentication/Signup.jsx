@@ -2,11 +2,18 @@ import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import { LOGIN_PATH } from "../routeConstants";
+import authenticationApi from "../../apis/authentication";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const onFinish = values => {
-    // eslint-disable-next-line no-console
-    console.log("Received values of form: ", values);
+  const history = useNavigate();
+  const onFinish = async values => {
+    try {
+      await authenticationApi.signup(values);
+      history(LOGIN_PATH);
+    } catch {
+      // logger.error(error);
+    }
   };
 
   return (
@@ -59,7 +66,7 @@ const Signup = () => {
           />
         </Form.Item>
         <Form.Item
-          name="firstName"
+          name="lastName"
           rules={[
             {
               required: true,
@@ -87,7 +94,7 @@ const Signup = () => {
           />
         </Form.Item>
         <Form.Item
-          name="confirmPassword"
+          name="passwordConfirmation"
           rules={[
             {
               required: true,

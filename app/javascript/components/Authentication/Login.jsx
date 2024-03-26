@@ -1,12 +1,32 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
-import { SIGNUP_PATH } from "../routeConstants";
+import { DASHBOARD_PATH, SIGNUP_PATH } from "../routeConstants";
+import authenticationApi from "../../apis/authentication";
+
+import { useAuthDispatch } from "contexts/auth";
+import { useUserDispatch } from "contexts/user";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const onFinish = values => {
-    // eslint-disable-next-line no-console
-    console.log("Received values of form: ", values);
+  const history = useNavigate();
+
+  const authDispatch = useAuthDispatch();
+  const userDispatch = useUserDispatch();
+
+  const onFinish = async values => {
+    const { email, password } = values;
+
+    try {
+      const {
+        data: { auth_token, user, is_admin },
+      } = await authenticationApi.login({ email, password });
+      authDispatch({ type: "LOGIN", payload: { auth_token, email, is_admin } });
+      userDispatch({ type: "SET_USER", payload: { user } });
+      history(DASHBOARD_PATH);
+    } catch {
+      // logger.error(error);
+    }
   };
 
   return (
